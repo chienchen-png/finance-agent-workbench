@@ -20,10 +20,11 @@
 
 ## 1. 账号与权限
 
-| 方案 | 说明 | 建议 |
-| :--- | :--- | :--- |
-| **A** 各自 GitHub 账号 + 加作协作者 | 提交能追溯到人；可互相 review PR | ✅ **推荐** |
-| **B** 三人共用你的账号 | 能正常 push/pull，但**无法区分谁提交**、无法互相 approve PR | ⚠️ 临时可行 |
+
+| 方案                                | 说明                                                        | 建议          |
+| :------------------------------------ | :------------------------------------------------------------ | :-------------- |
+| **A** 各自 GitHub 账号 + 加作协作者 | 提交能追溯到人；可互相 review PR                            | ✅**推荐**    |
+| **B** 三人共用你的账号              | 能正常 push/pull，但**无法区分谁提交**、无法互相 approve PR | ⚠️ 临时可行 |
 
 **若只能用方案 B（共用账号）**，必须在每台电脑上设置**各自的提交身份**，
 让 commit 作者可区分：
@@ -50,10 +51,11 @@ main  ●────────────────●──────�
                      (PR + 自检后合并)
 ```
 
-| 分支 | 用途 | 规则 |
-| :--- | :--- | :--- |
-| `main` | 稳定主线 | **禁止直接 push**，只通过 PR 合并 |
-| `feat/<角色>-<问题号>-<简述>` | 各自的工作分支 | 例：`feat/A-2-header-anchor` |
+
+| 分支                          | 用途           | 规则                              |
+| :------------------------------ | :--------------- | :---------------------------------- |
+| `main`                        | 稳定主线       | **禁止直接 push**，只通过 PR 合并 |
+| `feat/<角色>-<问题号>-<简述>` | 各自的工作分支 | 例：`feat/A-2-header-anchor`      |
 
 **分支命名示例**
 
@@ -64,6 +66,7 @@ feat/C-1-model-config-linkage   角色C · 问题1 · 模型配置联动
 ```
 
 **保护 main（仓库 -> Settings -> Branches -> Add rule）**
+
 - ✅ Require a pull request before merging
 - ✅ Require status checks（若有 CI）
 - ❌ 不要勾选 "Require approvals"（3 人且可能共用账号时会卡死流程）
@@ -74,12 +77,13 @@ feat/C-1-model-config-linkage   角色C · 问题1 · 模型配置联动
 
 > 目标：**每个文件只有一个主人**。文件不重叠 → 零冲突。
 
-| 角色 | 负责问题 | 定位 | 独占领地（主要文件） |
-| :--- | :--- | :--- | :--- |
-| **A** | **2** 数据识别准确性<br>**6** 部署上线 | 数据与基础设施 | `tools/table_layout_detector.py`<br>`tools/project_data_importer.py`<br>`tools/project_data_tools.py`<br>`tools/formula_fallback.py`<br>`tools/excel_tools.py`<br>`routes/project_data.py`<br>`app.py`<br>`config/**`<br>`requirements.txt`<br>`frontend/vite.config.ts`<br>`frontend/package.json`<br>`frontend/src/components/AppDataPanel.tsx`<br>`frontend/src/components/DataPanel.tsx`<br>`scripts/**` |
-| **B** | **3** 数据核对报告<br>**7** 报告问题 | 报告链路 | `routes/apps.py` 🔥<br>`routes/files.py`<br>`routes/finmod_refs.py`<br>`tools/reconcile_tool.py`<br>`tools/finmod_*.py`<br>`tools/_finmod_models.py`<br>`tools/financial_analysis_tools.py`<br>`frontend/src/pages/DataCheckAppPage.tsx`<br>`frontend/src/pages/FinModAppPage.tsx`<br>`frontend/src/components/ReconWizard.tsx`<br>`frontend/src/components/Chart*.tsx`<br>`frontend/src/components/MarkdownEditor.tsx`<br>`frontend/src/hooks/**` |
-| **C** | **1** 模型配置联动<br>**5** 登陆页面 ⚠️ | 模型与鉴权 | `routes/models.py`<br>`routes/workspace.py`<br>`routes/context.py`<br>`storage/model_store.py`<br>`agent/llm_client.py`<br>`agent/agent_config.py`<br>`agent/smol_model.py`<br>`frontend/src/pages/AiConfigPage.tsx`<br>`frontend/src/components/ModelPicker.tsx`<br>`ModelIcon.tsx` / `ModelCard.tsx` / `NewProjectDialog.tsx` |
-| **全员** | **4** 代码精简逻辑程度 | 横向重构 | ⚠️ **不单独分工**，见第 7 节 |
+
+| 角色     | 负责问题                              | 定位           | 独占领地（主要文件）                                                                                                                                                                                                                                                                                                                                                                               |
+| :--------- | :-------------------------------------- | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **A**    | **2** 数据识别准确性**6** 部署上线    | 数据与基础设施 | `tools/table_layout_detector.py``tools/project_data_importer.py``tools/project_data_tools.py``tools/formula_fallback.py``tools/excel_tools.py``routes/project_data.py``app.py``config/**``requirements.txt``frontend/vite.config.ts``frontend/package.json``frontend/src/components/AppDataPanel.tsx``frontend/src/components/DataPanel.tsx``scripts/**`                                           |
+| **B**    | **3** 数据核对报告**7** 报告问题      | 报告链路       | `routes/apps.py` 🔥`routes/files.py``routes/finmod_refs.py``tools/reconcile_tool.py``tools/finmod_*.py``tools/_finmod_models.py``tools/financial_analysis_tools.py``frontend/src/pages/DataCheckAppPage.tsx``frontend/src/pages/FinModAppPage.tsx``frontend/src/components/ReconWizard.tsx``frontend/src/components/Chart*.tsx``frontend/src/components/MarkdownEditor.tsx``frontend/src/hooks/**` |
+| **C**    | **1** 模型配置联动**5** 登陆页面 ⚠️ | 模型与鉴权     | `routes/models.py``routes/workspace.py``routes/context.py``storage/model_store.py``agent/llm_client.py``agent/agent_config.py``agent/smol_model.py``frontend/src/pages/AiConfigPage.tsx``frontend/src/components/ModelPicker.tsx``ModelIcon.tsx` / `ModelCard.tsx` / `NewProjectDialog.tsx`                                                                                                        |
+| **全员** | **4** 代码精简逻辑程度                | 横向重构       | ⚠️**不单独分工**，见第 7 节                                                                                                                                                                                                                                                                                                                                                                      |
 
 **为什么 3 和 7 必须同一个人**：两个问题的端点都在同一个 3050 行的
 `routes/apps.py` 里（recon 段 L494–810，finmod 段 L818–3050）。
@@ -96,16 +100,17 @@ feat/C-1-model-config-linkage   角色C · 问题1 · 模型配置联动
 
 以下文件**多人需要改**，是冲突高发区。规则：**改动前先在群里说一声，改完立刻 push**。
 
-| 文件 | 谁需要改 | 冲突级别 | 应对 |
-| :--- | :--- | :--- | :--- |
-| `frontend/src/lib/api.ts`（≈1530 行） | **所有人**（新增接口都要改） | 🔴🔴 `100% 冲突` | ⚠️ 必须在 **Phase 0** 拆分 |
-| `routes/apps.py`（≈3050 行） | B（主）+ C（模型解析） | 🔴🔴 | ⚠️ 必须在 **Phase 0** 拆分 |
-| `agent/llm_client.py` | C（主）+ B（使用） | 🔴 | C 拥有；B 只调用不改 |
-| `frontend/src/components/FileEditor.tsx` | A + B | 🟡 | 改动前协调 |
-| `storage/schema.sql` | A（主）+ C（若要加用户表） | 🟡 | 由 A 代为修改 |
-| `docs/项目架构文档.md` | 所有人（铁律 0） | 🟡 | **只追加自己的章节**，不要重排全文 |
-| `finance-agent-workbench/.github/**` | ⚠️ **禁止改** | — | 属项目铁律文件 |
-| `.gitattributes` / `.gitignore` | ⚠️ **禁止改** | — | 影响全体 |
+
+| 文件                                     | 谁需要改                     | 冲突级别        | 应对                               |
+| :----------------------------------------- | :----------------------------- | :---------------- | :----------------------------------- |
+| `frontend/src/lib/api.ts`（≈1530 行）   | **所有人**（新增接口都要改） | 🔴🔴`100% 冲突` | ⚠️ 必须在**Phase 0** 拆分        |
+| `routes/apps.py`（≈3050 行）            | B（主）+ C（模型解析）       | 🔴🔴            | ⚠️ 必须在**Phase 0** 拆分        |
+| `agent/llm_client.py`                    | C（主）+ B（使用）           | 🔴              | C 拥有；B 只调用不改               |
+| `frontend/src/components/FileEditor.tsx` | A + B                        | 🟡              | 改动前协调                         |
+| `storage/schema.sql`                     | A（主）+ C（若要加用户表）   | 🟡              | 由 A 代为修改                      |
+| `docs/项目架构文档.md`                   | 所有人（铁律 0）             | 🟡              | **只追加自己的章节**，不要重排全文 |
+| `finance-agent-workbench/.github/**`     | ⚠️**禁止改**               | —              | 属项目铁律文件                     |
+| `.gitattributes` / `.gitignore`          | ⚠️**禁止改**               | —              | 影响全体                           |
 
 **铁律**：如果你需要改 `api.ts` 或 `apps.py` → **先停下来，找对应的人协调**，不要直接改。
 
@@ -115,13 +120,15 @@ feat/C-1-model-config-linkage   角色C · 问题1 · 模型配置联动
 
 这是**一切并行工作的前提**。不做这一步，三人开工第一天就会撞车。
 
-| # | 任务 | 目标 | 建议负责人 | 工作量 |
-| :--- | :--- | :--- | :--- | :--- |
-| 0-1 | 拆分 `routes/apps.py` → `routes/recon.py` + `routes/finmod.py` + `routes/_llm_report.py` | 解开 问题3 ↔ 问题7 死锁 | B | 0.5–1 天 |
-| 0-2 | 拆分 `frontend/src/lib/api.ts` → `lib/api/{models,data,recon,finmod}.ts` + barrel `index.ts` | 解开**全员**公共冲突 | C | 0.5–1 天 |
-| 0-3 | 抽出 `agent/model_resolver.py`（含 `_build_llm_client` / `_resolve_model_ref`） | 解开 模型领地 ↔ 报告领地 交叉 | C | 0.5 天 |
+
+| #   | 任务                                                                                         | 目标                           | 建议负责人 | 工作量    |
+| :---- | :--------------------------------------------------------------------------------------------- | :------------------------------- | :----------- | :---------- |
+| 0-1 | 拆分`routes/apps.py` → `routes/recon.py` + `routes/finmod.py` + `routes/_llm_report.py`     | 解开 问题3 ↔ 问题7 死锁       | B          | 0.5–1 天 |
+| 0-2 | 拆分`frontend/src/lib/api.ts` → `lib/api/{models,data,recon,finmod}.ts` + barrel `index.ts` | 解开**全员**公共冲突           | C          | 0.5–1 天 |
+| 0-3 | 抽出`agent/model_resolver.py`（含 `_build_llm_client` / `_resolve_model_ref`）               | 解开 模型领地 ↔ 报告领地 交叉 | C          | 0.5 天    |
 
 **拆分原则**：
+
 - **纯搬迁，不改逻辑**（一个提交只做移动，PR 里 diff 应显示"移动"而非"重写"）
 - 拆分后立刻跑通验证：`python app.py` 启动 + `npm run build` 通过
 - 拆完先合并进 `main`，三人再 `pull` 后各自开工
@@ -162,11 +169,12 @@ git push -u origin feat/B-3-xxx
 
 ### 每日同步节奏（建议）
 
-| 时间 | 动作 |
-| :--- | :--- |
-| 早 | `git checkout main && git pull` |
-| 中午 | `git pull --rebase` + 汇报进展（谁在改哪些文件） |
-| 下班前 | 提交 + push + 开 PR |
+
+| 时间   | 动作                                             |
+| :------- | :------------------------------------------------- |
+| 早     | `git checkout main && git pull`                  |
+| 中午   | `git pull --rebase` + 汇报进展（谁在改哪些文件） |
+| 下班前 | 提交 + push + 开 PR                              |
 
 ---
 
@@ -174,21 +182,23 @@ git push -u origin feat/B-3-xxx
 
 **问题 4 不能作为独立分工项。** 它本质是**横向重构**，会碰所有人的领地。
 
-| 错误做法 | 正确做法 |
-| :--- | :--- |
-| 安排一个人全库"精简" | ❌ 必然与另外两人 100% 冲突 |
-| — | ✅ 各人在**改自己领地的 bug 时顺手精简** |
-| — | ✅ 或作为 Phase 0 拆分的副产品 |
+
+| 错误做法             | 正确做法                                 |
+| :--------------------- | :----------------------------------------- |
+| 安排一个人全库"精简" | ❌ 必然与另外两人 100% 冲突              |
+| —                   | ✅ 各人在**改自己领地的 bug 时顺手精简** |
+| —                   | ✅ 或作为 Phase 0 拆分的副产品           |
 
 **精简时必须避开的雷区**（这些是"看起来冗余但必须存在"的代码）：
 
-| 位置 | 看似冗余 | 实际作用 |
-| :--- | :--- | :--- |
-| `routes/apps.py::_fallback_report` / `_fallback_md_report` | 重复的报告模板 | LLM 不可用时的**降级路径** |
-| `agent/llm_client.py::_build_body` 三家差异分支 | 重复代码 | 规避 deepseek/glm/qwen 真实 **400 错误** |
-| `agent/llm_client.py::from_env` | 无人调用 | 环境变量**兜底路径** |
-| `agent/core.py`（legacy AgentCore） | 已被 smol 取代 | ⚠️ 需**先确认无人依赖**再删（见第 8 节） |
-| `tools/project_data_tools.py::_valid_columns` | 简单函数 | 被 `reconcile_tool.py` **跨文件 import** |
+
+| 位置                                                       | 看似冗余       | 实际作用                                   |
+| :----------------------------------------------------------- | :--------------- | :------------------------------------------- |
+| `routes/apps.py::_fallback_report` / `_fallback_md_report` | 重复的报告模板 | LLM 不可用时的**降级路径**                 |
+| `agent/llm_client.py::_build_body` 三家差异分支            | 重复代码       | 规避 deepseek/glm/qwen 真实**400 错误**    |
+| `agent/llm_client.py::from_env`                            | 无人调用       | 环境变量**兜底路径**                       |
+| `agent/core.py`（legacy AgentCore）                        | 已被 smol 取代 | ⚠️ 需**先确认无人依赖**再删（见第 8 节） |
+| `tools/project_data_tools.py::_valid_columns`              | 简单函数       | 被`reconcile_tool.py` **跨文件 import**    |
 
 **铁律**：删除任何函数前，必须执行 `git grep <函数名>` 确认全库无引用，
 并在 PR 里贴出搜索结果。
@@ -223,38 +233,44 @@ git push -u origin feat/B-3-xxx
 
 ### 场景 A：同名文件"删除重建" + 另一方修改
 
-| | 操作 |
-| :--- | :--- |
-| Alice | 删掉 `bug_a.py`，**同名**重建（内容全部换新） |
-| Bob | 修改 `bug_a.py` 里的某一行 |
+
+|       | 操作                                         |
+| :------ | :--------------------------------------------- |
+| Alice | 删掉`bug_a.py`，**同名**重建（内容全部换新） |
+| Bob   | 修改`bug_a.py` 里的某一行                    |
 
 **实测结果**：
+
 - Git **完全不知道**这是"删除+新建"，只看到一次「修改」（`4 insertions(+), 6 deletions(-)`）
 - Bob `pull` 时 → **`CONFLICT (content)`，整个文件冲突**（冲突标记包住全文）
 - 若解决时随手取了 Alice 的版本 → **Bob 的修复瞬间消失，零报错**
 
 ### 场景 B：改名重建（内容不变）+ 另一方修改 → ✅ 安全
 
-| | 操作 |
-| :--- | :--- |
+
+|       | 操作                                           |
+| :------ | :----------------------------------------------- |
 | Alice | `git mv bug_a.py bug_a_new.py`（**内容未变**） |
-| Bob | 修改 `bug_a.py` |
+| Bob   | 修改`bug_a.py`                                 |
 
 **实测结果**：Git 识别出改名（`rename bug_a.py => bug_a_new.py (100%)`），
 **自动把 Bob 的改动搬到新文件名上**，零冲突。✅
 
 ### 场景 C：改名 + 大改内容 + 另一方修改 → 🔴🔴 最危险
 
-| | 操作 |
-| :--- | :--- |
-| Alice | 删 `bug_a.py`，新建 `bug_a_v2.py` 并**重写内容** |
-| Bob | 修改 `bug_a.py` |
+
+|       | 操作                                            |
+| :------ | :------------------------------------------------ |
+| Alice | 删`bug_a.py`，新建 `bug_a_v2.py` 并**重写内容** |
+| Bob   | 修改`bug_a.py`                                  |
 
 **实测结果**：
+
 ```
 CONFLICT (modify/delete): bug_a.py deleted in <Alice> and modified in HEAD.
 Version HEAD of bug_a.py left in tree.
 ```
+
 - Bob 改的文件被标记为「**被对方删除了**」
 - 若 Bob 顺手 `git rm bug_a.py` + commit → **Bob 的修复静默消失**
 - 实测确认：全库 grep 找不到 `FIXED-BY-BOB`，**无任何报错**
@@ -270,11 +286,12 @@ git log --all --oneline -- <文件路径>    # 按文件搜索
 
 ### 结论 → 三条硬规则
 
-| # | 规则 |
-| :--- | :--- |
-| **1** | **要"重写"文件时，原地修改内容，绝不允许"删了再建"** |
+
+| #     | 规则                                                                 |
+| :------ | :--------------------------------------------------------------------- |
+| **1** | **要"重写"文件时，原地修改内容，绝不允许"删了再建"**                 |
 | **2** | **若必须改名，先单独提交一次"纯改名"（不改内容），再另起提交改内容** |
-| **3** | **解决冲突时，先读懂四方内容（用 `zdiff3`），默认"双方改动都保留"** |
+| **3** | **解决冲突时，先读懂四方内容（用 `zdiff3`），默认"双方改动都保留"**  |
 
 ---
 
@@ -310,22 +327,24 @@ L5
 
 ### 冲突状态速查
 
-| 状态 | 含义 | 危险度 |
-| :--- | :--- | :--- |
-| `UU` | 双方都改了同一区域 | 🟡 需人工合并 |
+
+| 状态 | 含义                 | 危险度          |
+| :----- | :--------------------- | :---------------- |
+| `UU` | 双方都改了同一区域   | 🟡 需人工合并   |
 | `UD` | **对方删了，我改了** | 🔴🔴 极易丢工作 |
 | `DU` | **我删了，对方改了** | 🔴🔴 极易丢工作 |
-| `AA` | 双方都新建了同名文件 | 🔴 |
+| `AA` | 双方都新建了同名文件 | 🔴              |
 
 ### 🚫 禁止的操作
 
-| 禁止 | 后果 |
-| :--- | :--- |
-| 删掉冲突标记、只留一边 | **丢掉另一方全部工作，零报错** |
-| `git checkout --ours <文件>` / `--theirs` 一把梭 | 同上 |
-| `git push --force` | 覆盖他人提交 |
-| `git reset --hard` | 丢弃本地未提交改动 |
-| 不确定时"猜一个" | 隐藏 bug 进入主线 |
+
+| 禁止                                             | 后果                           |
+| :------------------------------------------------- | :------------------------------- |
+| 删掉冲突标记、只留一边                           | **丢掉另一方全部工作，零报错** |
+| `git checkout --ours <文件>` / `--theirs` 一把梭 | 同上                           |
+| `git push --force`                               | 覆盖他人提交                   |
+| `git reset --hard`                               | 丢弃本地未提交改动             |
+| 不确定时"猜一个"                                 | 隐藏 bug 进入主线              |
 
 **不确定 → 停下来问人。** 这条永远优先于"完成任务"。
 
@@ -347,29 +366,30 @@ L5
 
 ## 12. 事故预防速查表
 
-| 危险动作 | 会怎样 | 正确做法 |
-| :--- | :--- | :--- |
-| 删文件再新建同名文件 | 整文件冲突，易丢工作 | **原地改内容** |
-| 改名同时大改内容 | `modify/delete` 冲突，静默丢失 | 分两次提交 |
-| 全库"顺手格式化" | 假冲突淹没真实改动 | **只改必要行** |
-| 直接在 `main` 上改 | 冲突 + 影响他人 | 开 `feat/` 分支 |
-| 一周才 push 一次 | 冲突面巨大 | 每半天同步 |
-| 改 `api.ts` / `apps.py` 不打招呼 | 100% 冲突 | **先协调** |
-| 冲突时只留一边 | 静默丢失他人工作 | 读懂四方，两边都留 |
-| 只说"已完成" | 问题被隐藏 | **贴实际运行输出** |
-| 改 `.gitattributes` / `.gitignore` | 影响全体 | 全员同意 |
+
+| 危险动作                          | 会怎样                         | 正确做法           |
+| :---------------------------------- | :------------------------------- | :------------------- |
+| 删文件再新建同名文件              | 整文件冲突，易丢工作           | **原地改内容**     |
+| 改名同时大改内容                  | `modify/delete` 冲突，静默丢失 | 分两次提交         |
+| 全库"顺手格式化"                  | 假冲突淹没真实改动             | **只改必要行**     |
+| 直接在`main` 上改                 | 冲突 + 影响他人                | 开`feat/` 分支     |
+| 一周才 push 一次                  | 冲突面巨大                     | 每半天同步         |
+| 改`api.ts` / `apps.py` 不打招呼   | 100% 冲突                      | **先协调**         |
+| 冲突时只留一边                    | 静默丢失他人工作               | 读懂四方，两边都留 |
+| 只说"已完成"                      | 问题被隐藏                     | **贴实际运行输出** |
+| 改`.gitattributes` / `.gitignore` | 影响全体                       | 全员同意           |
 
 ---
 
 ## 13. 立项检查清单（正式开工前逐项确认）
 
-- [ ] 三人各自设置好 `git config user.name/email`（区分提交作者）
-- [ ] 全员执行冲突配置：`zdiff3` / `histogram` / `rerere`
-- [ ] 仓库已加 `.gitattributes`（换行符统一）✅ 已完成
-- [ ] `main` 已开分支保护（禁止直接 push）
-- [ ] **Phase 0 解耦完成并合并进 `main`**（拆分 `apps.py` / `api.ts`，抽出 `model_resolver.py`）
-- [ ] 三人已 `git pull` 拿到 Phase 0 结果
-- [ ] 分工矩阵已确认，每人知道自己的**独占文件**与**禁区**
-- [ ] 每人已把 `.github/copilot-instructions.md` 作为 AI 的必读上下文
-- [ ] **问题 5（登录）需求已确认**（做 / 不做）
-- [ ] `agent/core.py` 是否可删已确认
+- [ ]  三人各自设置好 `git config user.name/email`（区分提交作者）
+- [ ]  全员执行冲突配置：`zdiff3` / `histogram` / `rerere`
+- [ ]  仓库已加 `.gitattributes`（换行符统一）✅ 已完成
+- [ ]  `main` 已开分支保护（禁止直接 push）
+- [ ]  **Phase 0 解耦完成并合并进 `main`**（拆分 `apps.py` / `api.ts`，抽出 `model_resolver.py`）
+- [ ]  三人已 `git pull` 拿到 Phase 0 结果
+- [ ]  分工矩阵已确认，每人知道自己的**独占文件**与**禁区**
+- [ ]  每人已把 `.github/copilot-instructions.md` 作为 AI 的必读上下文
+- [ ]  **问题 5（登录）需求已确认**（做 / 不做）
+- [ ]  `agent/core.py` 是否可删已确认

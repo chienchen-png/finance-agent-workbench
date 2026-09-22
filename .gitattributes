@@ -15,31 +15,42 @@
 # 默认：由 Git 自动判定文本文件，并在仓库内规范化为 LF
 * text=auto
 
-# ---------- 源代码 / 文档 / 配置：统一 LF ----------
-*.py        text eol=lf
-*.ts        text eol=lf
-*.tsx       text eol=lf
-*.js        text eol=lf
-*.jsx       text eol=lf
-*.mjs       text eol=lf
-*.cjs       text eol=lf
-*.json      text eol=lf
-*.jsonc     text eol=lf
-*.md        text eol=lf
-*.css       text eol=lf
-*.scss      text eol=lf
-*.html      text eol=lf
-*.htm       text eol=lf
-*.sql       text eol=lf
-*.yml       text eol=lf
-*.yaml      text eol=lf
-*.toml      text eol=lf
-*.ini       text eol=lf
-*.cfg       text eol=lf
-*.txt       text eol=lf
-*.csv       text eol=lf
+# ---------- 源代码 / 文档 / 配置 ----------
+# 只声明 text（Git 在入库时规范化为 LF），【不】强制工作区换行符。
+# → Windows 检出 CRLF、Linux/macOS 检出 LF，各平台都自然。
+#
+# ⚠️ 不要在这里加 eol=lf：
+#    那会迫使 Windows 工作区文件变成 LF，导致编辑器/工具改过的文件
+#    在 git status 里显示为「整文件被修改」的假改动（实测：仅换行符
+#    差异就会报出 113 增 / 93 删），反而掩盖真实改动。
+#    防冲突的关键是「仓库内统一 LF」，这一点 text 已经保证。
+*.py        text
+*.ts        text
+*.tsx       text
+*.js        text
+*.jsx       text
+*.mjs       text
+*.cjs       text
+*.json      text
+*.jsonc     text
+*.md        text
+*.css       text
+*.scss      text
+*.html      text
+*.htm       text
+*.sql       text
+*.yml       text
+*.yaml      text
+*.toml      text
+*.ini       text
+*.cfg       text
+*.txt       text
+*.csv       text
+*.svg       text
+
+# ---------- 跨平台脚本：必须固定换行符 ----------
+# Shell 脚本用 LF（CRLF 会让 bash 报 bad interpreter）
 *.sh        text eol=lf
-*.svg       text eol=lf
 
 # ---------- Windows 专属脚本：保持 CRLF ----------
 # 若改为 LF，cmd.exe 执行 .bat 可能出现异常
