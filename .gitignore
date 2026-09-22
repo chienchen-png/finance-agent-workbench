@@ -1,0 +1,95 @@
+﻿# =========================================================
+#  Finance Recon Agent / finance-agent-workbench
+# =========================================================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+/finance-agent-workbench/build/
+/finance-agent-workbench/dist/
+.venv/
+venv/
+env/
+*.egg
+
+# ---------- Node / 前端 ----------
+node_modules/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- 构建产物 / 可执行文件 ----------
+*.exe
+*.msi
+*.dmg
+*.app
+
+# ---------- pandoc 二进制本体 ----------
+# pandoc.exe 单个文件 222MB，超过 GitHub 单文件 100MB 硬上限，
+# 无法推送（错误 GH001）。请从 https://github.com/jgm/pandoc/releases 单独获取。
+finance-agent-workbench/offline_packages/pandoc/
+
+# ---------- 缓存 ----------
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---------- 数据库与运行时数据（含真实业务数据，禁止入库）----------
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+data/
+finance-agent-workbench/data/
+**/tmp_runs/
+**/app-workspaces/
+**/.task_memory/
+**/.task_memory/**/dump_*.json
+
+# ---------- 与项目无关的下载素材 ----------
+downloads/
+
+# ---------- 测试夹具中的敏感 / 无关文件 ----------
+finance-agent-workbench/test-fixtures/**/storage/
+finance-agent-workbench/test-fixtures/**/game/
+finance-agent-workbench/test-fixtures/**/待处理数据/
+finance-agent-workbench/test-fixtures/**/*.pdf
+finance-agent-workbench/test-fixtures/**/*.docx
+finance-agent-workbench/test-fixtures/**/*.xls
+finance-agent-workbench/test-fixtures/**/*.xlsx
+finance-agent-workbench/test-fixtures/**/__pycache__/
+
+# ---------- 脚本生成的中间产物 ----------
+finance-agent-workbench/scripts/_*.docx
+finance-agent-workbench/scripts/_*.tmp
+
+# ---------- 环境变量 / 凭据 ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials.json
+client_secret*.json
+
+# ---------- 日志 ----------
+*.log
+logs/
+
+# ---------- IDE / OS ----------
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+desktop.ini

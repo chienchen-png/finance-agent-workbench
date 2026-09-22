@@ -1,0 +1,6 @@
+node_modules
+# 仅忽略本目录下的构建产物 frontend/dist；
+# 注意不要写成裸 `dist`——那会连带忽略 public/vditor/dist 等内网化第三方库。
+/dist
+*.local
+*.tsbuildinfo

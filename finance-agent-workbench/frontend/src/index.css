@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* 全局基础样式 —— 浅色主题（对标 Codex 浅色版：白灰系） */
+:root {
+  color-scheme: light;
+  --brand: #2563eb;
+  --brand-hover: #1d4ed8;
+  --border-subtle: #e4e4e7;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family:
+    -apple-system, "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  background: #fafafa;
+  color: #18181b;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 滚动条浅色适配（更细、更精致） */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* 选区颜色 */
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+}
+
+/* 聚焦态统一 */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.4);
+  outline-offset: 1px;
+}
+
+/* 淡入动画（消息/面板） */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fade-in-up 0.18s ease-out;
+}
+
+/* 抽屉滑入/滑出（阶段 7.9.10：FileDrawer/DataPanel 从右平滑滑入；
+   7.9.10.1 放慢——滑入 0.32s / 滑出 0.26s，更丝滑）
+   进入：translateX(100%) → 0（从右滑入）
+   退出：0 → translateX(100%)（向右滑出） */
+.drawer-anim {
+  animation: drawer-slide-in 0.32s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+@keyframes drawer-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.drawer-anim-out {
+  animation: drawer-slide-out 0.26s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+@keyframes drawer-slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+/* Composer 阴影 */
+.composer-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.composer-shadow:focus-within {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 16px rgba(37, 99, 235, 0.12);
+}
+
+/* Composer 内部 textarea 聚焦时不再叠加全局描边（避免「双层高亮」） */
+.composer-shadow textarea:focus-visible {
+  outline: none;
+}
+
+/* ─────────────────────────────────────────────
+ * Beautiful UI 风格动画（Thinking / Tool Chips / Approval Card）
+ * 对齐 beautifului.dev 的精致动效：
+ *  shimmer-text  思考进行中标题渐变流动
+ *  fade-in       完成态淡入
+ *  fade-up       行内容浮现（错峰）
+ *  pop-in        确认徽标/卡片弹入
+ *  pixel-on      像素网格加载器格子点亮（LoadingState）
+ * ───────────────────────────────────────────── */
+@keyframes shimmer-text {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.shimmer-text {
+  background-image: linear-gradient(
+    90deg, #a1a1aa 35%, #18181b 50%, #a1a1aa 65%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer-text 1.4s linear infinite;
+}
+
+/* 像素网格加载器：格子按 delay 依次点亮（Drive/Dots/Orbit 波前） */
+@keyframes pixel-on {
+  0% { opacity: 0.07; }
+  45% { opacity: 0.85; }
+  100% { opacity: 0.15; }
+}
+
+/* 不确定进度条：流动动画（动态规划，总步数未知时使用） */
+@keyframes indeterminate-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.indeterminate-bar {
+  background: linear-gradient(90deg, transparent, #2563eb, transparent);
+  animation: indeterminate-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in 350ms ease-out both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fade-up 320ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.pop-in {
+  animation: pop-in 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* 智能体优化 3.0（阶段 A2）：ask_user 抽屉式浮层（从输入框上方滑出） */
+@keyframes drawer-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.drawer-up {
+  animation: drawer-up 280ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 700ms linear infinite;
+}
+
+/* ─────────────────────────────────────────────
+ * P12.4：Streaming Markdown（丝滑逐词流式）
+ *  stream-in    新词从 blur 中解析淡入（Beautiful UI stream-in）
+ *  stream-caret 打字机光标闪烁
+ * ───────────────────────────────────────────── */
+@keyframes stream-in {
+  from { opacity: 0; filter: blur(3px); transform: translateY(1px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────────
+ * Markdown 编辑器（D2）：Vditor 内置按钮 tooltip 统一向下弹出
+ *   Vditor 默认内置按钮 tooltip 为 __n/__ne/__nw（向上弹出），
+ *   顶部工具栏贴近容器上缘，向上弹出会被遮挡——覆盖为向下（__s 方向）。
+ *   纯 CSS 覆盖，不修改 Vditor 源码/组件逻辑。
+ * ───────────────────────────────────────────── */
+.vditor-toolbar .vditor-tooltipped__n::after,
+.vditor-toolbar .vditor-tooltipped__ne::after,
+.vditor-toolbar .vditor-tooltipped__nw::after {
+  top: 100%;
+  right: 50%;
+  bottom: auto;
+  margin-top: 5px;
+  margin-bottom: 0;
+  transform: translateX(50%);
+}
+.vditor-toolbar .vditor-tooltipped__n::before,
+.vditor-toolbar .vditor-tooltipped__ne::before,
+.vditor-toolbar .vditor-tooltipped__nw::before {
+  top: auto;
+  right: 50%;
+  bottom: -5px;
+  margin-right: -5px;
+  margin-top: 0;
+  border-top-color: transparent;
+  border-bottom-color: #3b3e43;
+}
+/* 向下对齐左缘（原 ne/nw 水平偏移清除，统一居中） */
+.vditor-toolbar .vditor-tooltipped__ne::after {
+  right: 50%;
+  left: auto;
+  margin-left: 0;
+}
+.vditor-toolbar .vditor-tooltipped__nw::after {
+  margin-right: 0;
+}
+.stream-token {
+  display: inline;
+  animation: stream-in 380ms cubic-bezier(0.22, 0.61, 0.25, 1) both;
+  will-change: filter, opacity;
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════
+ * 论文/报告排版（D8，2026-08-24）—— 预览即排版
+ *  依据 docs/项目架构文档.md 附录A（原 docs/格式.md，GB/T 7713 学位论文规范）
+ *  .vditor-reset：Vditor 所有渲染模式（即时/分屏/预览）的内容容器，
+ *  一套排版 CSS 同时作用于屏幕预览与浏览器打印 PDF → 所见即所得。
+ *  Word 导出用 Pandoc --reference-doc（reference-template.docx），
+ *  关键样式值（宋体/黑体/20磅/首行缩进/三线表）与本 CSS 对齐。
+ * ═══════════════════════════════════════════════ */
+.vditor-reset {
+  font-family: "SimSun", "宋体", serif !important;        /* 中文宋体（英文/数字 fallback TNR 由浏览器 serif 处理） */
+  color: #000;
+}
+/* 英文/数字用 Times New Roman（覆盖 serif fallback） */
+.vditor-reset, .vditor-reset p, .vditor-reset li, .vditor-reset td, .vditor-reset th {
+  font-family: "Times New Roman", "SimSun", "宋体", serif !important;
+}
+/* 标题：黑体 + 分级字号 + 对齐（H1 三号居中；H2 四号；H3 小四） */
+.vditor-reset h1, .vditor-reset h2, .vditor-reset h3,
+.vditor-reset h4, .vditor-reset h5, .vditor-reset h6 {
+  font-family: "SimHei", "黑体", "Microsoft YaHei", sans-serif !important;
+  color: #000;
+  font-weight: bold;
+}
+.vditor-reset h1 {
+  font-size: 16pt !important;         /* 三号 */
+  text-align: center !important;      /* 居中 */
+  margin: 2em 0 !important;           /* 段前段后各 2 行 */
+  line-height: 1.5;
+}
+.vditor-reset h2 { font-size: 14pt !important; text-align: left !important; margin: 1.5em 0 .75em !important; line-height: 1.5; }  /* 四号 */
+.vditor-reset h3, .vditor-reset h4 { font-size: 12pt !important; text-align: left !important; margin: 1em 0 .5em !important; line-height: 1.5; }  /* 小四 */
+.vditor-reset h5, .vditor-reset h6 { font-size: 12pt !important; text-align: left !important; margin: .5em 0 !important; line-height: 1.5; }
+/* 正文：小四 + 首行缩进 2 字符 + 两端对齐 */
+.vditor-reset p {
+  font-size: 12pt !important;
+  line-height: 1.8;
+  text-indent: 2em !important;        /* 首行缩进 2 字符 */
+  text-align: justify !important;     /* 两端对齐 */
+  margin: 0 0 0 0;
+}
+/* 非段落元素（列表项/表格）不缩进 */
+.vditor-reset li { text-indent: 0; }
+/* 表格：三线表近似（上下粗线 + 表头下线，无竖线），表内五号。
+   修复：Vditor 自带 .vditor-reset table { display:block } 导致表格按内容宽度
+   撑开、右侧留白且无法居中。强制恢复 display:table + 自适应宽度居中：
+   - 表格按内容宽度 display:table（恢复表格布局）
+   - margin:auto 使表格在文档中【水平居中】（不再靠左）
+   - 列多撑满时由容器横向滚动（Vditor overflow-x），列少时自然居中 */
+.vditor-reset table {
+  display: table !important;
+  width: auto !important;
+  min-width: 100% !important;   /* 至少占满容器，避免列少时过窄靠左 */
+  border-collapse: collapse !important;
+  margin: 1em auto !important;   /* 水平居中 */
+  border-top: 2px solid #000 !important;
+  border-bottom: 2px solid #000 !important;
+}
+.vditor-reset thead th {
+  border-top: none;
+  border-bottom: 1px solid #000 !important;
+}
+.vditor-reset table td, .vditor-reset table th {
+  border-left: none !important; border-right: none !important;
+  padding: 4px 8px !important;
+  font-size: 10.5pt !important;       /* 五号 */
+  line-height: 1.5;
+  text-align: center !important;      /* 表内单元格水平居中，列对齐更整齐 */
+}
+/* 代码/公式块保持等宽/独立（不缩进） */
+.vditor-reset pre, .vditor-reset .katex-display { text-indent: 0; }
+
+/* ═══ 打印精确化（PDF 导出）：A4 + 页边距 + 精确行距 20 磅 ═══ */
+@media print {
+  @page {
+    size: A4;
+    margin: 30mm 25mm 25mm 30mm;       /* 上 右 下 左（30/25/25/30mm） */
+  }
+  .vditor-reset p { line-height: 20pt; }   /* 固定值 20 磅，精确匹配 Word */
+  .vditor-reset { font-size: 12pt; }
+}
+.stream-caret {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  margin-left: 1px;
+  vertical-align: -2px;
+  border-radius: 1px;
+  background: #18181b;
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+

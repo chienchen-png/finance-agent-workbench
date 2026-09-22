@@ -1,0 +1,24 @@
+Flask>=3.0
+requests>=2.31
+openpyxl>=3.1.5
+# 阶段 1: smolagents 引擎（smol_model/smol_tools/smol_bridge/smol_engine）
+smolagents>=1.26.0
+# Phase 17 P4: .xls 老格式读写（xlrd 1.2 恢复 BIFF 支持；xlwt 写；xlutils 保留格式）
+xlrd>=1.2.0,<2.0
+xlwt>=1.3.0
+xlutils>=2.0.0
+# Phase 17 P11: 公式兜底重算（无缓存值公式文件导入时用 formulas 重算回填）
+formulas>=1.3.4
+
+# ── 财务建模 3D 图 / 数据分析运行依赖（离线 offline_packages 已补齐，2026-08-23）──
+# 3D 图（waterfall3d/bar3d/scatter3d）由 Python(mplot3d) 生成 base64 PNG（finmod_py_charts.py）
+matplotlib>=3.11
+# plotly 仅用于后端生成 fig_json（供 AI 提示词 / 模板图片对照，前端不再渲染在线交互）
+plotly>=6.9
+numpy>=2.5
+pandas>=3.0
+scipy>=1.18
+pillow>=12.3
+numpy-financial>=1.0.0
+python-dotenv>=1.2.3
+

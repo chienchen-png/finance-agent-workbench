@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Cache
+.cache/
+
+# Database
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+# 应用临时运行快照（每次 run 生成独立 SQLite，历史累积不入 git）
+data/tmp_runs/
+
+# Offline install packages.
+# 本仓库选择「包含」offline_packages（提供离线安装能力）。
+# 若想改为不跟踪，取消下面一行的注释即可。
+# offline_packages/
+
+# Test fixtures runtime artifacts
+test-fixtures/**/.task_memory/
+*.bak.*
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
