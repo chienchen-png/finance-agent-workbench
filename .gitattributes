@@ -1,0 +1,87 @@
+# =========================================================
+#  换行符统一规范（本文件必须提交，不可随意改动）
+# ---------------------------------------------------------
+#  为什么必须有这个文件：
+#  Git 的合并是「按行内容匹配」的。如果同一个文件在不同人的机器上
+#  换行符不同（CRLF vs LF），Git 会认为【每一行都变了】，
+#  于是报出整文件冲突 —— 明明只改了 3 行，却要面对 800 行冲突。
+#
+#  把规范写进仓库，就不再依赖每个人的本地 Git 配置，也不依赖
+#  编辑器/智能体生成文件时的行为。
+#
+#  规范：仓库内一律存储 LF；Windows 专属脚本保留 CRLF。
+# =========================================================
+
+# 默认：由 Git 自动判定文本文件，并在仓库内规范化为 LF
+* text=auto
+
+# ---------- 源代码 / 文档 / 配置：统一 LF ----------
+*.py        text eol=lf
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.jsx       text eol=lf
+*.mjs       text eol=lf
+*.cjs       text eol=lf
+*.json      text eol=lf
+*.jsonc     text eol=lf
+*.md        text eol=lf
+*.css       text eol=lf
+*.scss      text eol=lf
+*.html      text eol=lf
+*.htm       text eol=lf
+*.sql       text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.toml      text eol=lf
+*.ini       text eol=lf
+*.cfg       text eol=lf
+*.txt       text eol=lf
+*.csv       text eol=lf
+*.sh        text eol=lf
+*.svg       text eol=lf
+
+# ---------- Windows 专属脚本：保持 CRLF ----------
+# 若改为 LF，cmd.exe 执行 .bat 可能出现异常
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+*.ps1       text eol=crlf
+
+# ---------- 二进制：禁止任何行尾转换（转换会损坏文件）----------
+*.xlsx      binary
+*.xls       binary
+*.xlsm      binary
+*.db        binary
+*.db-wal    binary
+*.db-shm    binary
+*.sqlite    binary
+*.sqlite3   binary
+*.whl       binary
+*.egg       binary
+*.exe       binary
+*.dll       binary
+*.so        binary
+*.zip       binary
+*.tar       binary
+*.gz        binary
+*.7z        binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.bmp       binary
+*.webp      binary
+*.pdf       binary
+*.docx      binary
+*.doc       binary
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.otf       binary
+*.eot       binary
+*.mp4       binary
+*.mp3       binary
+
+# ---------- 锁文件：不展示逐行 diff（体积大且无意义）----------
+finance-agent-workbench/frontend/package-lock.json  -diff
